@@ -1,0 +1,107 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using mazeGenerator;
+
+namespace mazeGenerator
+{
+    internal class Maze_Dictionary : IMaze
+    {
+        public int rows, cols;
+        public Dictionary<string, CellsAndWalls>? maze_dict;
+
+        public Maze_Dictionary(int rows, int cols)
+        {
+            this.rows = rows;
+            this.cols = cols;
+
+            maze_dict = new Dictionary<string, CellsAndWalls>();
+
+            //Create a dictionary-based maze (with all walls, aside from the outside)
+
+            for (int i = 1; i <= rows; i++)
+                for (int j = 1; j <= cols; j++)
+                {
+                    //Create the cell
+                    Cell cell = new(i, j);
+
+                    //...and create the walls, as needed
+                    Wall? wallBelow = null;  //TMP
+                    Wall? wallToTheRight = null; //Also TMP
+
+                    if (j != cols & i != rows)
+                    {
+                        //Console.WriteLine($"({i},{j}): i != rows & j != cols");  //TMP
+                        //Add both a horizatal and vertical wall
+                        wallToTheRight = new Wall(i, j, Wall.WallDirection.vertical);
+                        //Console.WriteLine($"Wall (r{i}c{j}, {Wall.WallDirection.vertical}) added to walls");
+
+                        wallBelow = new Wall(i, j, Wall.WallDirection.horizontal);
+                        //Console.WriteLine($"Wall (r{i}c{i}, {Wall.WallDirection.horizontal}) added to walls");
+                    }
+                    else if (j != cols & i == rows)
+                    {
+                        //Console.WriteLine($"({i},{j}): i == rows & j != cols");  //TMP
+                        //Add a vertical wall but no horizontal wall
+                        wallToTheRight = new Wall(i, j, Wall.WallDirection.vertical);
+                        //Console.WriteLine($"Wall (r{i}c{j}, {Wall.WallDirection.vertical}) added to walls");
+                    }
+                    else if (j == cols & i != rows)
+                    {
+                        //Console.WriteLine($"({i},{j}): i != rows & j == cols");  //TMP
+                        //Add a horizontal wall but no vertical wall
+                        wallBelow = new Wall(i, j, Wall.WallDirection.horizontal);
+                        //Console.WriteLine($"Wall (r{i}c{j}, {Wall.WallDirection.horizontal}) added to walls");
+
+                    }
+                    else if (j == cols & i == rows)
+                    {
+                        //Console.WriteLine($"({i},{j}): i == rows & j == cols");  //TMP
+                        //Console.WriteLine("(No Walls forthcoming!)");
+                        //Don't add either
+                    }
+
+
+                    //Then put it in the dictionary
+                    /*string str = $"r{i}c{j}";
+                    Console.WriteLine($"Putting {str} in the dictionary.");*/
+                    maze_dict[$"r{i}c{j}"] = new CellsAndWalls(cell, wallBelow, wallToTheRight);
+                }
+        }
+
+        public IMaze CreateMaze(IMazeCreation mazeCreator)
+        {
+            //throw new NotImplementedException();
+            
+            //TMP
+            return this;
+        }
+
+        public IMaze GenerateMaze()
+        {
+            //TMP
+            return this;
+        }
+
+        public Dictionary<string, CellsAndWalls> GetDict()
+        {
+            if(maze_dict == null)
+                throw new Exception("Maze_Dictionary.GetDict says: maze_dict is null");
+
+            return maze_dict;
+        }
+
+        public (int, int) GetRowsAndColumns()
+        {
+            //throw new NotImplementedException();
+            return (rows, cols);
+        }
+
+        public void Render(IMazeRenderer renderer)
+        {
+            renderer.Render(this);
+        }
+    }
+}

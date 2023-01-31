@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mazeGenerator_depthFirst", "mazeGenerator_depthFirst\mazeGenerator_depthFirst.csproj", "{B13D52EF-4C15-438C-8A66-1A5974C8CD6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B13D52EF-4C15-438C-8A66-1A5974C8CD6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B13D52EF-4C15-438C-8A66-1A5974C8CD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B13D52EF-4C15-438C-8A66-1A5974C8CD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B13D52EF-4C15-438C-8A66-1A5974C8CD6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21A4DF65-171F-44A8-AB70-A4A4623C47F2}
+	EndGlobalSection
+EndGlobal
