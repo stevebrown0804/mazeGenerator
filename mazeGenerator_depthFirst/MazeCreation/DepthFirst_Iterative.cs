@@ -11,7 +11,9 @@ namespace mazeGenerator
         public IMaze CreateMaze(int rows, int cols)
         {
             //TMP
-            return new Maze_Dictionary(0, 0);
+            throw new NotImplementedException();
+            
+            //return new Maze_Dictionary(0, 0);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace mazeGenerator
     internal class CellsAndWalls
     {
         public Cell cell;
+
+        //RECALL THE DESIGN CHOICE: Walls are to the right of and below cells
         public Wall wallBelow;
         public Wall wallToTheRight;
 

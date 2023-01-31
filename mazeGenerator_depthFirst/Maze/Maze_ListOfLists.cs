@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace mazeGenerator
 {
-    class Maze_ListOfLists : IMaze
+    class Maze_ListOfLists : IMaze                          //Phasing this one out, I think
     {
         public CellsAndWalls? cellsAndWalls;
 
@@ -17,7 +17,7 @@ namespace mazeGenerator
         public int rows = 0;
         public int cols = 0;
 
-
+/*
         internal Maze_ListOfLists(int rows, int cols)
         {
             this.rows = rows;
@@ -45,11 +45,11 @@ namespace mazeGenerator
 
 
             //TMP - dumping the data (the check the order)
-            /*for (int j = 0; j < rows; j++)
+            *//*for (int j = 0; j < rows; j++)
                 for (int i = 0; i < cols; i++)
                 {
                     Console.WriteLine($"cell: {cells[j][i].x}, {cells[j][i].y} exists");
-                }*/
+                }*//*
 
             //next up, create the walls
             //DESIGN CHOICE: walls are to the right of and below cells
@@ -101,15 +101,15 @@ namespace mazeGenerator
                     }
                     else if (i == cols - 1 & j == rows - 1)
                     {
-                        /*Console.WriteLine($"({i},{j}):j == rows - 1 & i == cols - 1");  //TMP
-                        Console.WriteLine("(No Walls forthcoming!)");*/
+                        *//*Console.WriteLine($"({i},{j}):j == rows - 1 & i == cols - 1");  //TMP
+                        Console.WriteLine("(No Walls forthcoming!)");*//*
                         //Don't add either
                     }
 
                 }//END for (inner)
                  //END for (outer)
 
-        }//END Maze_ListOfLists(int rows, int cols) (constructor)
+        }//END Maze_ListOfLists(int rows, int cols) (constructor)*/
 
         public IMaze CreateMaze(IMazeCreation mazeCreator)
         {
@@ -136,7 +136,7 @@ namespace mazeGenerator
             throw new NotImplementedException();
         }
 
-        internal void RenderMazeToConsole()
+        /*internal void RenderMazeToConsole()
         {
             Console.WriteLine("\nRendering maze...\n");
 
@@ -144,19 +144,19 @@ namespace mazeGenerator
             List<List<Wall>> walls = this.walls;
 
             //TMP
-            /*int cellCount = 0;
+            *//*int cellCount = 0;
             int wallCount = 0;
             for (int i = 0; i < cells.Count; i++)
                 cellCount += cells[i].Count;
             for (int i = 0; i < walls.Count; i++)
                 wallCount += walls[i].Count;
-            Console.WriteLine($"Number of cells: {cellCount}; Number of walls: {wallCount}");*/
+            Console.WriteLine($"Number of cells: {cellCount}; Number of walls: {wallCount}");*//*
             //END TMP
 
             //string four_sp = "    ";
 
             //Ok, let's see here...
-            for (int i = 0; i < this.rows; /*.cols?*/ i++)                               //RESUME HERE
+            for (int i = 0; i < this.rows; *//*.cols?*//* i++)                               //RESUME HERE
             {
                 for (int j = 0; j < this.cols; j++)
                 {
@@ -179,7 +179,7 @@ namespace mazeGenerator
                 Console.WriteLine();
             }
 
-        }//END RenderMazeToConsole()
+        }//END RenderMazeToConsole()*/
 
     }//END Maze_ListOfLists (class)
 

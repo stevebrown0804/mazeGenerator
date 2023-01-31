@@ -9,7 +9,7 @@ namespace mazeGenerator
 {
     internal interface IMaze
     {
-        IMaze GenerateMaze();
+        //IMaze GenerateMaze();
         IMaze CreateMaze(IMazeCreation mazeCreator);
 
         void Render(IMazeRenderer renderer);

@@ -73,17 +73,18 @@ namespace mazeGenerator
 
         public IMaze CreateMaze(IMazeCreation mazeCreator)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
             
             //TMP
-            return this;
+            //return this;
         }
 
-        public IMaze GenerateMaze()
+        /*public IMaze GenerateMaze() //Was this necessary?
+                                    //I'm pretty sure the maze is 'generated' in the constructor
         {
             //TMP
             return this;
-        }
+        }*/
 
         public Dictionary<string, CellsAndWalls> GetDict()
         {
@@ -95,7 +96,6 @@ namespace mazeGenerator
 
         public (int, int) GetRowsAndColumns()
         {
-            //throw new NotImplementedException();
             return (rows, cols);
         }
 
