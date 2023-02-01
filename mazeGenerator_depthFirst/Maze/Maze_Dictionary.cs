@@ -73,10 +73,10 @@ namespace mazeGenerator
 
         public IMaze CreateMaze(IMazeCreation mazeCreator)
         {
-            throw new NotImplementedException();
-            
-            //TMP
-            //return this;
+            if (mazeCreator == null)
+                throw new Exception("Maze_Dictionary.CreateMaze says: mazeCreator is null");
+
+            return mazeCreator.CreateMaze(rows, cols, this);
         }
 
         /*public IMaze GenerateMaze() //Was this necessary?
