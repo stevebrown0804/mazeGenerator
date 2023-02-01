@@ -62,9 +62,21 @@ namespace mazeGenerator
 {
     internal class DepthFirst_Iterative : IMazeCreation
     {
+
+        static bool UnvisitedNeighborsDictIsAllTrue(Dictionary<int, bool> dict)
+        {
+            bool allTrue = true;
+            foreach(var key in dict.Keys)
+            {
+                if (dict[key] == false)
+                    allTrue = false;
+            }
+            return allTrue;
+        }
+
         public IMaze CreateMaze(int rows, int cols, IMaze maze)
         {
-            Console.WriteLine("DepthFirst_Iterative.CreateMaze says: In progress");
+            //Console.WriteLine("DepthFirst_Iterative.CreateMaze says: In progress");
             int counter = 0; //TMP
 
             Stack<Cell> cells = new();
@@ -99,75 +111,135 @@ namespace mazeGenerator
             visited[str] = true;
             cells.Push(maze_dict[str].cell);
 
-            while(cells.Count > 0)
+            int rnd_neighbor = 0;
+            while (cells.Count > 0)
             {
                 counter++;  //TMP
-
+                rnd_neighbor = rnd.Next(1, 5); //1..5 to get a [1..4] value (I think)
                 Cell currentCell = cells.Pop();
-                //for the moment we'll define "neighbors" as: up, down, left, right
-                string str_up = $"r{current_row - 1}c{current_col}";
-                string str_down = $"r{current_row + 1}c{current_col}";
-                string str_left = $"r{current_row}c{current_col - 1}";
-                string str_right = $"r{current_row}c{current_col + 1}";
-                //check that at least one of the strings (/keys) exists and has visited==false
-                if (visited.ContainsKey(str_up) && visited[str_up] == false)
+                str = $"r{currentCell.row}c{currentCell.col}";
+                
+                //We'll define "neighbors" as: up, down, left, right
+                string str_up = $"r{currentCell.row - 1}c{currentCell.col}";
+                string str_down = $"r{currentCell.row + 1}c{currentCell.col}";
+                string str_left = $"r{currentCell.row}c{currentCell.col - 1}";
+                string str_right = $"r{currentCell.row}c{currentCell.col + 1}";
+
+                //stuff to track the unvisted neighbors, for each interation of the following while loop
+                Dictionary<int, bool> unvisitedNeighbors = new() { {1, false},{ 2, false },{ 3, false },{ 4, false } };
+                bool neighborVisited = false;
+
+                while (!neighborVisited && !UnvisitedNeighborsDictIsAllTrue(unvisitedNeighbors))
                 {
-                        cells.Push(currentCell);
-                        currentCell = maze_dict[str_up].cell;
-                        maze_dict[str_up].wallBelow = null;
-                        visited[str_up] = true;
-                        cells.Push(currentCell);
-                        str = str_up;
-                        current_row = currentCell.row;
-                        current_col = currentCell.col;
-                }else if (visited.ContainsKey(str_down) && visited[str_down] == false)
-                {
-                        cells.Push(currentCell);
-                        maze_dict[str].wallBelow = null;
-                        currentCell = maze_dict[str_down].cell;
-                        visited[str_down] = true;
-                        cells.Push(currentCell);
-                        str = str_down;
-                        current_row = currentCell.row;
-                        current_col = currentCell.col;
-                //    }
-                }else if (visited.ContainsKey(str_left) && visited[str_left] == false)
-                {
-                        cells.Push(currentCell);
-                        maze_dict[str_left].wallToTheRight = null;
-                        currentCell = maze_dict[str_left].cell;
-                        visited[str_left] = true;
-                        cells.Push(currentCell);
-                        str = str_left;
-                        current_row = currentCell.row;
-                        current_col = currentCell.col;
-                //    }
-                }else if(visited.ContainsKey(str_right) && visited[str_right] == false)
-                {
-                        cells.Push(currentCell);
-                        maze_dict[str].wallToTheRight = null;
-                        currentCell = maze_dict[str_right].cell;
-                        visited[str_right] = true;
-                        cells.Push(currentCell);
-                        str = str_right;
-                        current_row = currentCell.row;
-                        current_col = currentCell.col;
- //                   }
-                }                
-                else
-                {
-                    // do nothing, I guess
-                }
+                    //check that at least one of the strings (/keys) exists and has visited==false
+                    switch (rnd_neighbor)
+                    {
+                        case 1:
+                            if (visited.ContainsKey(str_up) && visited[str_up] == false)
+                            {
+                                cells.Push(currentCell);
+                                currentCell = maze_dict[str_up].cell;
+                                maze_dict[str_up].wallBelow = null;
+                                visited[str_up] = true;
+                                cells.Push(currentCell);
+                                str = str_up;
+                                current_row = currentCell.row;
+                                current_col = currentCell.col;
+                                neighborVisited = true;
+                            }
+                            else
+                            {
+                                unvisitedNeighbors[1] = true;
+                                rnd_neighbor = rnd.Next(1, 5);  //get a new roll
+                            }
+                            break;
+                        case 2:
+                            if (visited.ContainsKey(str_down) && visited[str_down] == false)
+                            {
+                                cells.Push(currentCell);
+                                maze_dict[str].wallBelow = null;
+                                currentCell = maze_dict[str_down].cell;
+                                visited[str_down] = true;
+                                cells.Push(currentCell);
+                                str = str_down;
+                                current_row = currentCell.row;
+                                current_col = currentCell.col;
+                                neighborVisited = true;
+                            }
+                            else
+                            {
+                                unvisitedNeighbors[2] = true;
+                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                            }
+                            break;
+                        case 3:
+                            if (visited.ContainsKey(str_left) && visited[str_left] == false)
+                            {
+                                cells.Push(currentCell);
+                                maze_dict[str_left].wallToTheRight = null;
+                                currentCell = maze_dict[str_left].cell;
+                                visited[str_left] = true;
+                                cells.Push(currentCell);
+                                str = str_left;
+                                current_row = currentCell.row;
+                                current_col = currentCell.col;
+                                neighborVisited = true;
+                            }
+                            else
+                            {
+                                unvisitedNeighbors[3] = true;
+                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                            }
+                            break;
+                        case 4:
+                            if (visited.ContainsKey(str_right) && visited[str_right] == false)
+                            {
+                                cells.Push(currentCell);
+                                maze_dict[str].wallToTheRight = null;
+                                currentCell = maze_dict[str_right].cell;
+                                visited[str_right] = true;
+                                cells.Push(currentCell);
+                                str = str_right;
+                                current_row = currentCell.row;
+                                current_col = currentCell.col;
+                                neighborVisited = true;
+                            }
+                            else
+                            {
+                                unvisitedNeighbors[4] = true;
+                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                            }
+                            break;
+                        default:
+                            throw new Exception("DepthFirst_Iterative.CreateMaze says: rnd_neighbor wasn't in [1,4]");
+                    
+                    }//END switch (rnd_neighbor)
+
+                }//END while (unvisitedNeighborCount < 4)
 
                 //TMP
-                Console.WriteLine($"\nAfter {counter} steps:");
-                IMazeRenderer render_dict = new RenderDictionaryToConsole();
-                maze.Render(render_dict);
+                /*Console.WriteLine($"\nAfter {counter} steps:");
+                IMazeRenderer render_dict2 = new RenderDictionaryToConsole();
+                maze.Render(render_dict2);*/
                 //END TMP
-            }
-          
+
+            }//END while (cells.Count > 0)
+
+            //TMP
+            /*Console.WriteLine("\nFinal result!");
+            Console.WriteLine($"\nAfter {counter} steps:");
+            IMazeRenderer render_dict = new RenderDictionaryToConsole();
+            maze.Render(render_dict);*/
+
+            /*foreach (var k in visited.Keys)
+            {
+                Console.WriteLine($"visited[{k}] = {visited[k]}");
+            }*/
+            //END TMP
+
 
             return maze;
-        }
+
+        }//END CreateMaze()
     }
 }
