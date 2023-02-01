@@ -14,7 +14,7 @@ namespace mazeGenerator
             Console.WriteLine("main: Maze_Dictionary -- depth-first -- iterative\n");  //TMP
 
             //First we'll create the starting point for the maze
-            IMaze maze = new Maze_Dictionary(3, 3);
+            IMaze maze = new Maze_Dictionary(15, 15);
             //maze = maze.GenerateMaze();
 
             //And render it, just to be sure
