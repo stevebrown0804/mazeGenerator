@@ -81,7 +81,7 @@ namespace mazeGenerator
                 visited[k] = false;
             }
 
-            //..and commence the maze-creation algorithm:
+            //"..and commence the maze-creation algorithm:
             /*  Choose the initial cell, mark it as visited and push it to the stack
                 While the stack is not empty
                     Pop a cell from the stack and make it a current cell
@@ -89,11 +89,11 @@ namespace mazeGenerator
                         Push the current cell to the stack
                         Choose one of the unvisited neighbours
                         Remove the wall between the current cell and the chosen cell
-                        Mark the chosen cell as visited and push it to the stack */
+                        Mark the chosen cell as visited and push it to the stack" */
 
-            Random rnd = new Random();
-            int current_row = rnd.Next(1, rows + 1); //RandomNumberGenerator.GetInt32(1, rows);
-            int current_col = rnd.Next(1, cols + 1); //RandomNumberGenerator.GetInt32(1, cols);
+            Random rnd = new Random(Guid.NewGuid().GetHashCode());
+            int current_row = rnd.Next(1, rows + 1);
+            int current_col = rnd.Next(1, cols + 1);
 
             string str = $"r{current_row}c{current_col}";
             visited[str] = true;
@@ -110,10 +110,8 @@ namespace mazeGenerator
                 string str_left = $"r{current_row}c{current_col - 1}";
                 string str_right = $"r{current_row}c{current_col + 1}";
                 //check that at least one of the strings (/keys) exists and has visited==false
-                if (visited.ContainsKey(str_up))
+                if (visited.ContainsKey(str_up) && visited[str_up] == false)
                 {
-                    if (visited[str_up] == false)
-                    {
                         cells.Push(currentCell);
                         currentCell = maze_dict[str_up].cell;
                         maze_dict[str_up].wallBelow = null;
@@ -122,11 +120,8 @@ namespace mazeGenerator
                         str = str_up;
                         current_row = currentCell.row;
                         current_col = currentCell.col;
-                    }
-                }else if (visited.ContainsKey(str_down))
+                }else if (visited.ContainsKey(str_down) && visited[str_down] == false)
                 {
-                    if (visited[str_down] == false)
-                    {
                         cells.Push(currentCell);
                         maze_dict[str].wallBelow = null;
                         currentCell = maze_dict[str_down].cell;
@@ -135,11 +130,9 @@ namespace mazeGenerator
                         str = str_down;
                         current_row = currentCell.row;
                         current_col = currentCell.col;
-                    }
-                }else if (visited.ContainsKey(str_left))
+                //    }
+                }else if (visited.ContainsKey(str_left) && visited[str_left] == false)
                 {
-                    if (visited[str_left] == false)
-                    {
                         cells.Push(currentCell);
                         maze_dict[str_left].wallToTheRight = null;
                         currentCell = maze_dict[str_left].cell;
@@ -148,11 +141,9 @@ namespace mazeGenerator
                         str = str_left;
                         current_row = currentCell.row;
                         current_col = currentCell.col;
-                    }
-                }else if(visited.ContainsKey(str_right))
+                //    }
+                }else if(visited.ContainsKey(str_right) && visited[str_right] == false)
                 {
-                    if (visited[str_right] == false)
-                    {
                         cells.Push(currentCell);
                         maze_dict[str].wallToTheRight = null;
                         currentCell = maze_dict[str_right].cell;
@@ -161,7 +152,7 @@ namespace mazeGenerator
                         str = str_right;
                         current_row = currentCell.row;
                         current_col = currentCell.col;
-                    }
+ //                   }
                 }                
                 else
                 {

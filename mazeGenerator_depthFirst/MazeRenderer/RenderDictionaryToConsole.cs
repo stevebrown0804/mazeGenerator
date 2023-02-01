@@ -22,6 +22,8 @@ namespace mazeGenerator
                         Console.Write("  *  ");
                     if (dict[str].wallToTheRight != null)
                         Console.Write("|");
+                    else
+                        Console.Write(" ");
 
                 }
                 Console.WriteLine();
@@ -30,6 +32,8 @@ namespace mazeGenerator
                     string str = $"r{i}c{j}";
                     if (dict[str].wallBelow != null)
                         Console.Write(" ___  ");
+                    else
+                        Console.Write("      ");
                 }
                 Console.WriteLine();
                 Console.WriteLine();

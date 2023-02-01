@@ -79,13 +79,6 @@ namespace mazeGenerator
             return mazeCreator.CreateMaze(rows, cols, this);
         }
 
-        /*public IMaze GenerateMaze() //Was this necessary?
-                                    //I'm pretty sure the maze is 'generated' in the constructor
-        {
-            //TMP
-            return this;
-        }*/
-
         public Dictionary<string, CellsAndWalls> GetDict()
         {
             if(maze_dict == null)

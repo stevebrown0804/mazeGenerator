@@ -116,10 +116,10 @@ namespace mazeGenerator
             throw new NotImplementedException();
         }
 
-        public IMaze GenerateMaze()
+ /*       public IMaze GenerateMaze()
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public Dictionary<string, CellsAndWalls> GetDict()
         {
