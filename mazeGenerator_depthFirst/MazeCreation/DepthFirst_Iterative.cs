@@ -150,7 +150,9 @@ namespace mazeGenerator
                             else
                             {
                                 unvisitedNeighbors[1] = true;
-                                rnd_neighbor = rnd.Next(1, 5);  //get a new roll
+                                do
+                                    rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                while (rnd_neighbor == 1);
                             }
                             break;
                         case 2:
@@ -169,7 +171,9 @@ namespace mazeGenerator
                             else
                             {
                                 unvisitedNeighbors[2] = true;
-                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                do
+                                    rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                while (rnd_neighbor == 2);
                             }
                             break;
                         case 3:
@@ -188,7 +192,9 @@ namespace mazeGenerator
                             else
                             {
                                 unvisitedNeighbors[3] = true;
-                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                do
+                                    rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                while (rnd_neighbor == 3);
                             }
                             break;
                         case 4:
@@ -207,7 +213,9 @@ namespace mazeGenerator
                             else
                             {
                                 unvisitedNeighbors[4] = true;
-                                rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                do
+                                    rnd_neighbor = rnd.Next(1, 5);  //new roll
+                                while (rnd_neighbor == 4);
                             }
                             break;
                         default:

@@ -28,8 +28,8 @@ namespace mazeGenerator
                     Cell cell = new(i, j);
 
                     //...and create the walls, as needed
-                    Wall? wallBelow = null;  //TMP
-                    Wall? wallToTheRight = null; //Also TMP
+                    Wall? wallBelow = null;
+                    Wall? wallToTheRight = null;
 
                     if (j != cols & i != rows)
                     {
