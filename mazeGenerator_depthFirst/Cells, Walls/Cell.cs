@@ -8,7 +8,6 @@ namespace mazeGenerator
 {
     class Cell
     {
-        //public int x, y;
         public int row, col;
 
          internal Cell(int row, int col)

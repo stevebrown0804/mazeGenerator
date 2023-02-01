@@ -11,7 +11,6 @@ namespace mazeGenerator
         //RECALL THE DESIGN CHOICE: Walls are to the right of and below cells
         // That is,the horizontal wall at maze[0][0] will be to the right the cell at maze[0][0]
         //  and the vertical wall at maze[0][0] will be below the cell at maze[0][0]
-        
 
         public enum WallDirection
         {
@@ -20,20 +19,8 @@ namespace mazeGenerator
             vertical
         }
 
-
         public int x, y;
         public WallDirection direction;
-
-        /*public Wall()
-        {
-            x = 0; y = 0;
-            direction = WallDirection.unset;
-        }
-        public Wall(int x, int y)
-        {
-            this.x = x; this.y = y;
-            this.direction = WallDirection.unset;
-        }*/
 
         public Wall(int x, int y, WallDirection direction)
         {

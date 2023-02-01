@@ -63,7 +63,6 @@ namespace mazeGenerator
                         //Don't add either
                     }
 
-
                     //Then put it in the dictionary
                     /*string str = $"r{i}c{j}";
                     Console.WriteLine($"Putting {str} in the dictionary.");*/

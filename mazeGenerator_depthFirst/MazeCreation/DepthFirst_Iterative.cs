@@ -1,9 +1,9 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks;*/
 
 /*Frequently implemented with a stack, this approach is one of the simplest 
  * ways to generate a cells using a computer. Consider the space for a cells 
@@ -93,8 +93,8 @@ namespace mazeGenerator
                 visited[k] = false;
             }
 
-            //"..and commence the maze-creation algorithm:
-            /*  Choose the initial cell, mark it as visited and push it to the stack
+            //..and commence the maze-creation algorithm:
+            /*  "Choose the initial cell, mark it as visited and push it to the stack
                 While the stack is not empty
                     Pop a cell from the stack and make it a current cell
                     If the current cell has any neighbours which have not been visited
@@ -111,7 +111,7 @@ namespace mazeGenerator
             visited[str] = true;
             cells.Push(maze_dict[str].cell);
 
-            int rnd_neighbor = 0;
+            int rnd_neighbor; // = 0;
             while (cells.Count > 0)
             {
                 counter++;  //TMP
@@ -143,8 +143,8 @@ namespace mazeGenerator
                                 visited[str_up] = true;
                                 cells.Push(currentCell);
                                 str = str_up;
-                                current_row = currentCell.row;
-                                current_col = currentCell.col;
+                                //current_row = currentCell.row;
+                                //current_col = currentCell.col;
                                 neighborVisited = true;
                             }
                             else
@@ -162,8 +162,8 @@ namespace mazeGenerator
                                 visited[str_down] = true;
                                 cells.Push(currentCell);
                                 str = str_down;
-                                current_row = currentCell.row;
-                                current_col = currentCell.col;
+                                //current_row = currentCell.row;
+                                //current_col = currentCell.col;
                                 neighborVisited = true;
                             }
                             else
@@ -181,8 +181,8 @@ namespace mazeGenerator
                                 visited[str_left] = true;
                                 cells.Push(currentCell);
                                 str = str_left;
-                                current_row = currentCell.row;
-                                current_col = currentCell.col;
+                                //current_row = currentCell.row;
+                                //current_col = currentCell.col;
                                 neighborVisited = true;
                             }
                             else
@@ -200,8 +200,8 @@ namespace mazeGenerator
                                 visited[str_right] = true;
                                 cells.Push(currentCell);
                                 str = str_right;
-                                current_row = currentCell.row;
-                                current_col = currentCell.col;
+                                //current_row = currentCell.row;
+                                //current_col = currentCell.col;
                                 neighborVisited = true;
                             }
                             else
