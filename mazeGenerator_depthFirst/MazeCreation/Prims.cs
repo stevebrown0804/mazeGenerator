@@ -65,7 +65,7 @@ namespace mazeGenerator
 
         public IMaze CreateMaze(IMaze maze)
         {
-            Console.WriteLine("In progress: Prim's algorithm");  //TMP
+            Console.WriteLine("In progress: Prim's algorithm\n");  //TMP
 
             /*Start with a grid full of walls.
             Pick a cell, mark it as part of the maze. Add the walls of the cell to the wall list.
@@ -94,24 +94,24 @@ namespace mazeGenerator
             int starting_col = rnd.Next(1, cols + 1);
             string str = $"r{starting_row}c{starting_col}";
 
-            // "Pick a cell, mark it as part of the maze. Add the walls of the cell to the wall list."
+            // "Pick a cell, mark it as part of the maze..."
             //newMaze[str] = mazeDict[str];
             visited[str] = true;
 
-
-            if(mazeDict[str].wallBelow != null)
+            //"... and add the walls of the cell to the wall list."
+            if (mazeDict[str].wallBelow != null)
                 walls.Add(mazeDict[str].wallBelow);
             
             if (mazeDict[str].wallToTheRight != null)
                 walls.Add(mazeDict[str].wallToTheRight);
 
-            //Add the below wall from the cell above this one (if it exists)
+            //  Add the below wall from the cell above this one (if it exists)
             string str_up = $"r{mazeDict[str].cell.row - 1}c{mazeDict[str].cell.col}";  //Below
             if (mazeDict.ContainsKey(str_up))
                 if(mazeDict[str_up].wallBelow != null)
                     walls.Add(mazeDict[str_up].wallBelow);
 
-            //Add the ToTheRight wall from the cell to the left of this one (if it exists)
+            //  Add the ToTheRight wall from the cell to the left of this one (if it exists)
             string str_left = $"r{mazeDict[str].cell.row}c{mazeDict[str].cell.col - 1}"; //ToTheRight
             if (mazeDict.ContainsKey(str_left))
                 if (mazeDict[str_left].wallToTheRight != null)
@@ -122,10 +122,10 @@ namespace mazeGenerator
             while (walls.Count > 0)
             {
                 // "Pick a random wall from the list."
-                int rnd_wall = rnd.Next(0, walls.Count - 1);  // adding ' - 1' for the moment
+                int rnd_wall = rnd.Next(0, walls.Count);  //TODO: Move "str_theWall" up here
 
                 bool isOnlyOneVisited = false;
-                Wall? theWall = null;
+                Wall theWall = null;
 
                 theWall = walls[rnd_wall];
                 if (theWall == null)
@@ -145,27 +145,31 @@ namespace mazeGenerator
 
                     if (theWall.direction == Wall.WallDirection.horizontal)
                         mazeDict[str_theWall].wallBelow = null;
-                    else  //direction == vertical
+                    else if (theWall.direction == Wall.WallDirection.vertical)
                         mazeDict[str_theWall].wallToTheRight = null;
+                    else
+                        throw new Exception("Prims.CreateMaze says: theWall is in an unrecognized direction");
 
-                    visited[str_theWall] = true;
+                    
+                    visited[str_theWall] = true;        //are we sure this is the correct cell to be marking? TBD
+
 
                     //"Add the neighboring walls of the cell to the wall list."
-                    if (mazeDict[str].wallBelow != null)        //should str be str_theWall here?  TBD
-                        walls.Add(mazeDict[str].wallBelow);
+                    if (mazeDict[str_theWall].wallBelow != null)        //should str be str_theWall here?  TBD
+                        walls.Add(mazeDict[str_theWall].wallBelow);
 
-                    if (mazeDict[str].wallToTheRight != null)
-                        walls.Add(mazeDict[str].wallToTheRight);
+                    if (mazeDict[str_theWall].wallToTheRight != null)
+                        walls.Add(mazeDict[str_theWall].wallToTheRight);
 
-                    str_up = $"r{mazeDict[str].cell.row - 1}c{mazeDict[str].cell.col}";  //Below
+                    str_up = $"r{mazeDict[str_theWall].cell.row - 1}c{mazeDict[str_theWall].cell.col}";  //Below
                     if (mazeDict.ContainsKey(str_up))
                         if (mazeDict[str_up].wallBelow != null)
-                            walls.Add(mazeDict[str].wallBelow);
+                            walls.Add(mazeDict[str_up].wallBelow);
 
-                    str_left = $"r{mazeDict[str].cell.row}c{mazeDict[str].cell.col - 1}"; //ToTheRight
+                    str_left = $"r{mazeDict[str_theWall].cell.row}c{mazeDict[str_theWall].cell.col - 1}"; //ToTheRight
                     if (mazeDict.ContainsKey(str_left))
                         if (mazeDict[str_left].wallToTheRight != null)
-                            walls.Add(mazeDict[str].wallToTheRight);
+                            walls.Add(mazeDict[str_left].wallToTheRight);
                 
                 }//END if (isOnlyOneVisited)
 
@@ -176,6 +180,16 @@ namespace mazeGenerator
                 walls.Remove(theWall);
             
             }//END while (walls.Count > 0)
+
+            //TMP
+            int visitedTrueCounter = 0;
+            foreach (var k in visited.Keys)
+            {
+                if (visited[k] == true)
+                    visitedTrueCounter++;
+            }
+            Console.WriteLine($"Visited.Count == true: {visitedTrueCounter}\n");  
+            //END TMP
 
             return new Maze_Dictionary(rows, cols, mazeDict); //newMaze);
         
