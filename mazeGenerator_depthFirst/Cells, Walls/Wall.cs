@@ -19,12 +19,12 @@ namespace mazeGenerator
             vertical
         }
 
-        public int x, y;
+        public int row, col;
         public WallDirection direction;
 
-        public Wall(int x, int y, WallDirection direction)
+        public Wall(int row, int col, WallDirection direction)
         {
-            this.x = x; this.y = y;
+            this.row = row; this.col = col;
             this.direction = direction;
         }
     }

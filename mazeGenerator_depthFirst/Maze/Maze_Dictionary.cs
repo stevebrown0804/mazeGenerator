@@ -12,6 +12,13 @@ namespace mazeGenerator
         public int rows, cols;
         public Dictionary<string, CellsAndWalls>? maze_dict;
 
+        public Maze_Dictionary(int rows, int cols, Dictionary<string, CellsAndWalls> maze_dict)
+        {
+            this.rows = rows;
+            this.cols = cols;
+            this.maze_dict = maze_dict;
+        }
+
         public Maze_Dictionary(int rows, int cols)
         {
             this.rows = rows;

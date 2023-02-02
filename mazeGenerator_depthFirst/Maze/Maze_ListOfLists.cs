@@ -48,7 +48,7 @@ namespace mazeGenerator
             *//*for (int j = 0; j < rows; j++)
                 for (int i = 0; i < cols; i++)
                 {
-                    Console.WriteLine($"cell: {cells[j][i].x}, {cells[j][i].y} exists");
+                    Console.WriteLine($"cell: {cells[j][i].row}, {cells[j][i].col} exists");
                 }*//*
 
             //next up, create the walls
