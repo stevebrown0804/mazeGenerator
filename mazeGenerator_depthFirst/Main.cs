@@ -17,7 +17,7 @@ namespace mazeGenerator
             Console.WriteLine("main: Maze_Dictionary -- Prim's algorithm\n");
 
             //First we'll create the starting point for the maze
-            IMaze maze = new Maze_Dictionary(5, 5);
+            IMaze maze = new Maze_Dictionary(3, 3);
 
             //Next up, we'll create a maze using a specific routine            
             //IMazeCreation mazeCreator = new DepthFirst_Iterative();
