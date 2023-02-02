@@ -74,10 +74,12 @@ namespace mazeGenerator
             return allTrue;
         }
 
-        public IMaze CreateMaze(int rows, int cols, IMaze maze)
+        public IMaze CreateMaze(IMaze maze)
         {
             //Console.WriteLine("DepthFirst_Iterative.CreateMaze says: In progress");
             int counter = 0; //TMP
+
+            (int rows, int cols) = maze.GetRowsAndColumns();
 
             Stack<Cell> cells = new();
 

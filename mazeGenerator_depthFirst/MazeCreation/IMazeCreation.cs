@@ -8,6 +8,6 @@ namespace mazeGenerator
 {
     internal interface IMazeCreation
     {
-        IMaze CreateMaze(int rows, int cols, IMaze maze);
+        IMaze CreateMaze(IMaze maze);
     }
 }

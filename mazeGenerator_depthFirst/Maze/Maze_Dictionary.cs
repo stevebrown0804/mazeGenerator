@@ -75,7 +75,7 @@ namespace mazeGenerator
             if (mazeCreator == null)
                 throw new Exception("Maze_Dictionary.CreateMaze says: mazeCreator is null");
 
-            return mazeCreator.CreateMaze(rows, cols, this);
+            return mazeCreator.CreateMaze(this);
         }
 
         public Dictionary<string, CellsAndWalls> GetDict()
