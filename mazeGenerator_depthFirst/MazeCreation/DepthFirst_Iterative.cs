@@ -1,10 +1,4 @@
-﻿/*using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;*/
-
+﻿
 /*Frequently implemented with a stack, this approach is one of the simplest 
  * ways to generate a cells using a computer. Consider the space for a cells 
  * being a large grid of cells (like a large chess board), each cell starting 

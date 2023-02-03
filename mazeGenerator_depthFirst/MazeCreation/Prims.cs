@@ -1,13 +1,4 @@
-﻿/*using mazeGenerator;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;*/
-
+﻿
 namespace mazeGenerator
 {
     internal class Prims : IMazeCreation
@@ -27,121 +18,132 @@ namespace mazeGenerator
         Note that simply running classical Prim's on a graph with random edge weights would create mazes stylistically identical to Kruskal's, because they are both minimal spanning tree algorithms. Instead, this algorithm introduces stylistic variation because the edges closer to the starting point have a lower effective weight.
 
         Modified version
-        Although the classical Prim's algorithm keeps a list of edges, for maze generation we could instead maintain a list of adjacent cells. If the randomly chosen cell has multiple edges that connect it to the existing  maze, select one of these edges at random. This will tend to branch slightly more than the edge-based     version above.*/
+        Although the classical Prim's algorithm keeps a list of edges, for maze generation we could instead maintain a list of adjacent cells. If the randomly chosen cell has multiple edges that connect it to the existing  maze, select one of these edges at random. This will tend to branch slightly more than the edge-based version above.*/
 
-        bool CheckThatOnlyOneCellThatTheWallDividesHasBeenVisited(Wall wall, 
-                                                                  Dictionary<string, CellsAndWalls> dict,
-                                                                  Dictionary<string, bool> visit)
-        { 
-            string str_up = $"r{wall.row - 1}c{wall.col}";
+        bool CheckThatOnlyOneCellThatTheWallDividesHasBeenVisited(Wall wall, Dictionary<string, bool> visited_dict)
+        {
+            int cellCounter = 0;
+            string str_theWall = $"r{wall.row}c{wall.col}";
+
+            if (visited_dict.ContainsKey(str_theWall))
+                if (visited_dict[str_theWall])
+                    cellCounter++;
+
+            if (wall.direction == Wall.WallDirection.horizontal)   //it's a Below wall, so check the cell below it
+            {                
+                string str_below = $"r{wall.row + 1}c{wall.col}";
+                if (visited_dict.ContainsKey(str_below))
+                    if (visited_dict[str_below])
+                        cellCounter++;
+            }
+            else //wall.directiondir == vertical      //it's a ToTheRight wall, so check the cell to the right
+            {
+                string str_toTheRight = $"r{wall.row}c{wall.col + 1}";
+                if (visited_dict.ContainsKey(str_toTheRight))
+                    if (visited_dict[str_toTheRight])
+                        cellCounter++;
+            }
+
+            /*string str_up = $"r{wall.row - 1}c{wall.col}";
             string str_down = $"r{wall.row + 1}c{wall.col}";
             string str_left = $"r{wall.row}c{wall.col - 1}";
-            string str_right = $"r{wall.row}c{wall.col + 1}";
-
-            int cellCounter = 0;
-            if (dict.ContainsKey(str_up))
-            {   //...and has been visited
-                if (visit[str_up])
-                    cellCounter++;
-            }
-            if (dict.ContainsKey(str_down))
-            {
-                if (visit[str_down])
-                    cellCounter++;
-            }
-            if (dict.ContainsKey(str_left))
-            {
-                if (visit[str_left])
-                    cellCounter++;
-            }
-            if (dict.ContainsKey(str_right))
-            {
-                if (visit[str_right])
-                    cellCounter++;
-            }
+            string str_right = $"r{wall.row}c{wall.col + 1}";*/
 
             return cellCounter == 1;
         }
+
 
         public IMaze CreateMaze(IMaze maze)
         {
             Console.WriteLine("In progress: Prim's algorithm\n");  //TMP
 
-            /*Start with a grid full of walls.
+            /* "Start with a grid full of walls.
             Pick a cell, mark it as part of the maze. Add the walls of the cell to the wall list.
             While there are walls in the list:
                 Pick a random wall from the list. If only one of the cells that the wall divides is visited, then:
                     Make the wall a passage and mark the unvisited cell as part of the maze.
                     Add the neighboring walls of the cell to the wall list.
-                Remove the wall from the list.*/
+                Remove the wall from the list." */
 
             (int rows, int cols) = maze.GetRowsAndColumns();
             Dictionary<string, CellsAndWalls> mazeDict = maze.GetDict();
-
-            //List<CellsAndWalls> walls = new();
             List<Wall> walls = new();
-            //Dictionary<string, CellsAndWalls> newMaze = new();
             Dictionary<string, bool> visited = new();
 
             //Initialize the 'visited' dictionary to false
             foreach (var k in mazeDict.Keys)
-            {
-                visited[k] = false;
-            }
-
+                 visited[k] = false;
+ 
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             int starting_row = rnd.Next(1, rows + 1);
             int starting_col = rnd.Next(1, cols + 1);
-            string str = $"r{starting_row}c{starting_col}";
+            string starting_str = $"r{starting_row}c{starting_col}";
 
+            //
             // "Pick a cell, mark it as part of the maze..."
-            //newMaze[str] = mazeDict[str];
-            visited[str] = true;
+            //
+            visited[starting_str] = true;
 
+            //
             //"... and add the walls of the cell to the wall list."
-            if (mazeDict[str].wallBelow != null)
-                walls.Add(mazeDict[str].wallBelow);
+            //
+            if (mazeDict[starting_str].wallBelow != null)
+                walls.Add(mazeDict[starting_str].wallBelow);
             
-            if (mazeDict[str].wallToTheRight != null)
-                walls.Add(mazeDict[str].wallToTheRight);
+            if (mazeDict[starting_str].wallToTheRight != null)
+                walls.Add(mazeDict[starting_str].wallToTheRight);
 
             //  Add the below wall from the cell above this one (if it exists)
-            string str_up = $"r{mazeDict[str].cell.row - 1}c{mazeDict[str].cell.col}";  //Below
+            string str_up = $"r{mazeDict[starting_str].cell.row - 1}c{mazeDict[starting_str].cell.col}";
             if (mazeDict.ContainsKey(str_up))
                 if(mazeDict[str_up].wallBelow != null)
                     walls.Add(mazeDict[str_up].wallBelow);
 
             //  Add the ToTheRight wall from the cell to the left of this one (if it exists)
-            string str_left = $"r{mazeDict[str].cell.row}c{mazeDict[str].cell.col - 1}"; //ToTheRight
+            string str_left = $"r{mazeDict[starting_str].cell.row}c{mazeDict[starting_str].cell.col - 1}";
             if (mazeDict.ContainsKey(str_left))
                 if (mazeDict[str_left].wallToTheRight != null)
                     walls.Add(mazeDict[str_left].wallToTheRight);
 
+            //Then remove duplicates
+            walls = walls.Distinct().ToList();      //Necessary?  TBD
 
+            //
             // "While there are walls in the list:"
+            //
             while (walls.Count > 0)
             {
+                //TMP
+                for (int i = 0; i < walls.Count; i++)
+                {
+                    if (walls[i] == null)
+                        throw new Exception($"walls[{i}] is null");
+                }
+                //END TMP
+
+                //
                 // "Pick a random wall from the list."
-                int rnd_wall = rnd.Next(0, walls.Count);  //TODO: Move "str_theWall" up here
+                //
+                int rnd_wall = rnd.Next(0, walls.Count);                
 
                 bool isOnlyOneVisited = false;
-                Wall theWall = null;
+                Wall theWall = walls[rnd_wall];
+                string str_theWall = $"r{theWall.row}c{theWall.col}";
 
-                theWall = walls[rnd_wall];
                 if (theWall == null)
-                    throw new Exception("Prims.CreateMaze says: theWall is null (just after declaration & assignment)");
+                    throw new Exception("Prims.CreateMaze says: theWall is null (just after initialization)");
 
-                isOnlyOneVisited = CheckThatOnlyOneCellThatTheWallDividesHasBeenVisited(theWall, mazeDict, visited);
-                    //getting a "theWall is null" exception inside this^ function.
-                    //is rnd_wall generating numbers that are beyond the range of walls?
-                    //  ...or is walls getting nulls put into it?  TBD
+                isOnlyOneVisited = CheckThatOnlyOneCellThatTheWallDividesHasBeenVisited(theWall, visited);
 
-
+                //
                 //"If only one of the cells that the wall divides is visited, then:"
+                //
                 if (isOnlyOneVisited)
                 {
-                    //"Make the wall a passage and mark the unvisited cell as part of the maze."
-                    string str_theWall = $"r{theWall.row}c{theWall.col}";
+                    //
+                    //"Make the wall a passage..."
+                    // (aka set the wall to null)
+                    //
 
                     if (theWall.direction == Wall.WallDirection.horizontal)
                         mazeDict[str_theWall].wallBelow = null;
@@ -150,34 +152,59 @@ namespace mazeGenerator
                     else
                         throw new Exception("Prims.CreateMaze says: theWall is in an unrecognized direction");
 
-                    
-                    visited[str_theWall] = true;        //are we sure this is the correct cell to be marking? TBD
+                    string str_unvistedCell = "";
+
+                    //
+                    //"..and mark the unvisited cell as part of the maze."
+                    //
+                    if (theWall.direction == Wall.WallDirection.horizontal)   //it's a Below wall, so check the cell below it
+                    {
+                        str_unvistedCell = $"r{theWall.row + 1}c{theWall.col}";
+                        visited[str_unvistedCell] = true;  //TODO, maybe: check keyExists on this
+                        
+                    }
+                    else //dir == vertical      //it's a ToTheRight wall, so check the cell to the right
+                    {
+                        str_unvistedCell = $"r{theWall.row}c{theWall.col + 1}";
+                        visited[str_unvistedCell] = true;
+                    }
 
 
-                    //"Add the neighboring walls of the cell to the wall list."
-                    if (mazeDict[str_theWall].wallBelow != null)        //should str be str_theWall here?  TBD
-                        walls.Add(mazeDict[str_theWall].wallBelow);
+                    //
+                    //"Add the neighboring walls of the (recently marked as visited) cell to the wall list."
+                    //
+                    if (mazeDict[str_unvistedCell].wallBelow != null) 
+                    walls.Add(mazeDict[str_unvistedCell].wallBelow);
 
-                    if (mazeDict[str_theWall].wallToTheRight != null)
-                        walls.Add(mazeDict[str_theWall].wallToTheRight);
+                    if (mazeDict[str_unvistedCell].wallToTheRight != null)
+                        walls.Add(mazeDict[str_unvistedCell].wallToTheRight);
 
-                    str_up = $"r{mazeDict[str_theWall].cell.row - 1}c{mazeDict[str_theWall].cell.col}";  //Below
+                    str_up = $"r{mazeDict[str_unvistedCell].cell.row - 1}c{mazeDict[str_unvistedCell].cell.col}";  //Below
+
                     if (mazeDict.ContainsKey(str_up))
                         if (mazeDict[str_up].wallBelow != null)
                             walls.Add(mazeDict[str_up].wallBelow);
 
-                    str_left = $"r{mazeDict[str_theWall].cell.row}c{mazeDict[str_theWall].cell.col - 1}"; //ToTheRight
+                    str_left = $"r{mazeDict[str_unvistedCell].cell.row}c{mazeDict[str_unvistedCell].cell.col - 1}"; //ToTheRight
+
                     if (mazeDict.ContainsKey(str_left))
                         if (mazeDict[str_left].wallToTheRight != null)
                             walls.Add(mazeDict[str_left].wallToTheRight);
-                
+
+                    //Then remove duplicates
+                    walls = walls.Distinct().ToList();  //Again, necessary? TBD
+
                 }//END if (isOnlyOneVisited)
 
-                // Remove the wall (theWall) from the list
+                //
+                // "Remove the wall (theWall?  or...I dunno what else) from the list."
+                //
                 if (theWall == null)
                     throw new Exception("Prims.CreateMaze says: theWall is null");
 
-                walls.Remove(theWall);
+                bool removedTheWall = walls.Remove(theWall);
+                if (!removedTheWall)
+                    throw new Exception("Prims.CreateMaze says: unsuccessfully called Remove() on theWall; bad thing? TBD");
             
             }//END while (walls.Count > 0)
 
@@ -191,7 +218,7 @@ namespace mazeGenerator
             Console.WriteLine($"Visited.Count == true: {visitedTrueCounter}\n");  
             //END TMP
 
-            return new Maze_Dictionary(rows, cols, mazeDict); //newMaze);
+            return new Maze_Dictionary(rows, cols, mazeDict);
         
         }//END CreateMaze()
     }

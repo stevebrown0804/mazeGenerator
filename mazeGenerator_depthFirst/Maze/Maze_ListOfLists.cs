@@ -1,10 +1,4 @@
-﻿/*using mazeGenerator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;*/
-
+﻿
 namespace mazeGenerator
 {
     class Maze_ListOfLists : IMaze                          //Phasing this one out, I think
