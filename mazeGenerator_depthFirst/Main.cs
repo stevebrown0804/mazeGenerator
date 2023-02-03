@@ -4,11 +4,11 @@
     {
         public static void Main()
         {
-            //Console.WriteLine("main: Maze_Dictionary -- depth-first -- iterative\n");  //TMP
-            Console.WriteLine("main: Maze_Dictionary -- Prim's algorithm\n");
+            //Console.WriteLine("main: MazeStorage_Dictionary -- depth-first -- iterative\n");  //TMP
+            Console.WriteLine("main: MazeStorage_Dictionary -- Prim's algorithm\n");
 
             //First we'll create the starting point for the maze
-            IMaze maze = new Maze_Dictionary(15, 15);
+            IMazeStorage maze = new MazeStorage_Dictionary(15, 15);
 
             //Next up, we'll create a maze using a specific routine            
             //IMazeCreation mazeCreator = new DepthFirst_Iterative();

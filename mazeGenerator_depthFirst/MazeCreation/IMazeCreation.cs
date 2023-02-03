@@ -2,6 +2,6 @@
 {
     internal interface IMazeCreation
     {
-        IMaze CreateMaze(IMaze maze);
+        IMazeStorage CreateMaze(IMazeStorage maze);
     }
 }

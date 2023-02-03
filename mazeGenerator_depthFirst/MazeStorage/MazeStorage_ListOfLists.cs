@@ -1,6 +1,6 @@
 ﻿namespace mazeGenerator
 {
-    class Maze_ListOfLists : IMaze                          //Phasing this one out, I think
+    class MazeStorage_ListOfLists : IMazeStorage                          //Phasing this one out, I think
     {
         public CellsAndWalls? cellsAndWalls;
 
@@ -11,7 +11,7 @@
         public int cols = 0;
 
 /*
-        internal Maze_ListOfLists(int rows, int cols)
+        internal MazeStorage_ListOfLists(int rows, int cols)
         {
             this.rows = rows;
             this.cols = cols;
@@ -102,14 +102,14 @@
                 }//END for (inner)
                  //END for (outer)
 
-        }//END Maze_ListOfLists(int rows, int cols) (constructor)*/
+        }//END MazeStorage_ListOfLists(int rows, int cols) (constructor)*/
 
-        public IMaze CreateMaze(IMazeCreation mazeCreator)
+        public IMazeStorage CreateMaze(IMazeCreation mazeCreator)
         {
             throw new NotImplementedException();
         }
 
- /*       public IMaze GenerateMaze()
+ /*       public IMazeStorage GenerateMaze()
         {
             throw new NotImplementedException();
         }*/
@@ -174,6 +174,6 @@
 
         }//END RenderMazeToConsole()*/
 
-    }//END Maze_ListOfLists (class)
+    }//END MazeStorage_ListOfLists (class)
 
 }//END (namespace)

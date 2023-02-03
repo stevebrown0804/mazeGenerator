@@ -2,7 +2,7 @@
 {
     internal class RenderDictionaryToConsole : IMazeRenderer
     {
-        public void Render(IMaze maze)
+        public void Render(IMazeStorage maze)
         {
             Dictionary<string, CellsAndWalls> dict = maze.GetDict();
             (int rows, int cols) = maze.GetRowsAndColumns();

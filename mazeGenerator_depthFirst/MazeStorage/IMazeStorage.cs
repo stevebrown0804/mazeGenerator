@@ -1,8 +1,8 @@
 ﻿namespace mazeGenerator
 {
-    internal interface IMaze
+    internal interface IMazeStorage
     {
-        IMaze CreateMaze(IMazeCreation mazeCreator);
+        IMazeStorage CreateMaze(IMazeCreation mazeCreator);
 
         void Render(IMazeRenderer renderer);
 

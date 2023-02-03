@@ -67,7 +67,7 @@ namespace mazeGenerator
             return allTrue;
         }
 
-        public IMaze CreateMaze(IMaze maze)
+        public IMazeStorage CreateMaze(IMazeStorage maze)
         {
             //Console.WriteLine("DepthFirst_Iterative.CreateMaze says: In progress");
             int counter = 0; //TMP

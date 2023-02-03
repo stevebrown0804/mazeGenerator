@@ -49,7 +49,7 @@
         }//END CheckThatOnlyOneCellThatTheWallDividesHasBeenVisited()
 
 
-        public IMaze CreateMaze(IMaze maze)
+        public IMazeStorage CreateMaze(IMazeStorage maze)
         {
             //Console.WriteLine("In progress: Prim's algorithm\n");  //TMP
 
@@ -193,7 +193,7 @@
             }
             Console.WriteLine($"Visited.Count == true: {visitedTrueCounter}\n"); */ 
 
-            return new Maze_Dictionary(rows, cols, mazeDict);
+            return new MazeStorage_Dictionary(rows, cols, mazeDict);
         
         }//END CreateMaze()
 

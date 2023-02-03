@@ -1,18 +1,18 @@
 ﻿namespace mazeGenerator
 {
-    internal class Maze_Dictionary : IMaze
+    internal class MazeStorage_Dictionary : IMazeStorage
     {
         public int rows, cols;
         public Dictionary<string, CellsAndWalls>? maze_dict;
 
-        public Maze_Dictionary(int rows, int cols, Dictionary<string, CellsAndWalls> maze_dict)
+        public MazeStorage_Dictionary(int rows, int cols, Dictionary<string, CellsAndWalls> maze_dict)
         {
             this.rows = rows;
             this.cols = cols;
             this.maze_dict = maze_dict;
         }
 
-        public Maze_Dictionary(int rows, int cols)
+        public MazeStorage_Dictionary(int rows, int cols)
         {
             this.rows = rows;
             this.cols = cols;
@@ -70,10 +70,10 @@
                 }
         }
 
-        public IMaze CreateMaze(IMazeCreation mazeCreator)
+        public IMazeStorage CreateMaze(IMazeCreation mazeCreator)
         {
             if (mazeCreator == null)
-                throw new Exception("Maze_Dictionary.CreateMaze says: mazeCreator is null");
+                throw new Exception("MazeStorage_Dictionary.CreateMaze says: mazeCreator is null");
 
             return mazeCreator.CreateMaze(this);
         }
@@ -81,7 +81,7 @@
         public Dictionary<string, CellsAndWalls> GetDict()
         {
             if(maze_dict == null)
-                throw new Exception("Maze_Dictionary.GetDict says: maze_dict is null");
+                throw new Exception("MazeStorage_Dictionary.GetDict says: maze_dict is null");
 
             return maze_dict;
         }

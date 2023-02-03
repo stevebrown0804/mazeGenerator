@@ -2,6 +2,6 @@
 {
     internal interface IMazeRenderer
     {
-        void Render(IMaze maze);
+        void Render(IMazeStorage maze);
     }
 }
