@@ -1,5 +1,4 @@
-﻿
-namespace mazeGenerator
+﻿namespace mazeGenerator
 {
     internal interface IMazeCreation
     {

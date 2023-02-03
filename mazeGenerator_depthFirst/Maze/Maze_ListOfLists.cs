@@ -1,5 +1,4 @@
-﻿
-namespace mazeGenerator
+﻿namespace mazeGenerator
 {
     class Maze_ListOfLists : IMaze                          //Phasing this one out, I think
     {

@@ -1,5 +1,4 @@
-﻿
-/*Frequently implemented with a stack, this approach is one of the simplest 
+﻿/*Frequently implemented with a stack, this approach is one of the simplest 
  * ways to generate a cells using a computer. Consider the space for a cells 
  * being a large grid of cells (like a large chess board), each cell starting 
  * with four walls. Starting from a random cell, the computer then selects a 
