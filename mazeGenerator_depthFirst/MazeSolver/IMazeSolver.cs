@@ -2,6 +2,6 @@
 {
     internal interface IMazeSolver
     {
-        IMazeStorage Solve(IMazeStorage maze);
+        IMazeSolver Solve(IMazeStorage maze, Player player);
     }
 }

@@ -5,10 +5,10 @@
         public static void Main()
         {
             //Console.WriteLine("main: MazeStorage_Dictionary -- depth-first -- iterative\n");  //TMP
-            Console.WriteLine("main: MazeStorage_Dictionary -- Prim's algorithm\n");
+            //Console.WriteLine("main: MazeStorage_Dictionary -- Prim's algorithm\n");
 
             //First we'll create the starting point for the maze
-            IMazeStorage maze = new MazeStorage_Dictionary(15, 15);
+            IMazeStorage maze = new MazeStorage_Dictionary(3, 3);
 
             //Next up, we'll create a maze using a specific routine            
             //IMazeCreation mazeCreator = new DepthFirst_Iterative();
@@ -17,9 +17,12 @@
 
             //We'll create a player object
             Player player = new (maze);
-            Console.WriteLine($"Starting point: ({player.goal.startingPoint.row}, {player.goal.startingPoint.col})");
+            /*Console.WriteLine($"Starting point: ({player.goal.startingPoint.row}, {player.goal.startingPoint.col})");
             Console.WriteLine($"Current player position: ({player.position.row}, {player.position.col})");
-            Console.WriteLine($"Goal point: ({player.goal.endPoint.row}, {player.goal.endPoint.col})");
+            Console.WriteLine($"Goal point: ({player.goal.endPoint.row}, {player.goal.endPoint.col})");*/
+            IMazeSolver solver = new MazeSolver();
+            solver = solver.Solve(maze, player);
+
 
             //..and then render it
             IMazeRenderer renderTarget = new RenderDictionaryToConsole();
