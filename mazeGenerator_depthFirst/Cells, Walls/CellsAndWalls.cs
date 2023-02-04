@@ -8,11 +8,14 @@
         public Wall? wallBelow;
         public Wall? wallToTheRight;
 
+        public int distance;    //Adding this for the shortest-path algorithm
+
         public CellsAndWalls(Cell cell, Wall? wallBelow, Wall? wallToTheRight)
         {
             this.cell = cell;
             this.wallBelow = wallBelow;
             this.wallToTheRight = wallToTheRight;
+            distance = 0;   //REMINDER: recently added
         }
     }
 }

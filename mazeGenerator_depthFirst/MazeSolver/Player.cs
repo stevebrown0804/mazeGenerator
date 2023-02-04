@@ -25,7 +25,7 @@
             }
         }
 
-        internal class Goal
+        /*internal class Goal
         {
             public Position startingPoint;
             public Position endPoint;
@@ -35,16 +35,19 @@
                 startingPoint = new Position(1, 1);  //assume all mazes start at (1,1)
                 endPoint = new Position(maze);
             }
-        }
+        }*/
 
         IMazeStorage maze;
-        internal Goal goal;
+        internal /*Goal*/ Position goal;
+        internal Position startingPoint;
         internal Position position;
 
         internal Player(IMazeStorage maze) 
         {
             this.maze = maze;
-            goal = new(maze);
+            //goal = new(maze);
+            goal = new Position(maze);
+            startingPoint = new Position(); //(1,1)
             position = new Position();
         }
     }    

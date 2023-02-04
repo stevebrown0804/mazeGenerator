@@ -8,7 +8,7 @@
             //Console.WriteLine("main: MazeStorage_Dictionary -- Prim's algorithm\n");
 
             //First we'll create the starting point for the maze
-            IMazeStorage maze = new MazeStorage_Dictionary(3, 3);
+            IMazeStorage maze = new MazeStorage_Dictionary(2, 2);
 
             //Next up, we'll create a maze using a specific routine            
             //IMazeCreation mazeCreator = new DepthFirst_Iterative();
