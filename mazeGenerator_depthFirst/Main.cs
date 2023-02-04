@@ -8,26 +8,26 @@
             //Console.WriteLine("main: MazeStorage_Dictionary -- Prim's algorithm\n");
 
             //First we'll create the starting point for the maze
-            IMazeStorage maze = new MazeStorage_Dictionary(2, 2);
+            IMazeStorage maze = new MazeStorage_Dictionary(10, 10);
 
             //Next up, we'll create a maze using a specific routine            
             //IMazeCreation mazeCreator = new DepthFirst_Iterative();
             IMazeCreation mazeCreator = new Prims();
             maze = maze.CreateMaze(mazeCreator);
 
+            //..and then render it
+            IMazeRenderer renderTarget = new RenderDictionaryToConsole();
+            //IMazeRenderer renderTarget = new RenderDictionaryToFile();
+            maze.Render(renderTarget);
+
+
             //We'll create a player object
-            Player player = new (maze);
+            Player player = new(maze);
             /*Console.WriteLine($"Starting point: ({player.goal.startingPoint.row}, {player.goal.startingPoint.col})");
             Console.WriteLine($"Current player position: ({player.position.row}, {player.position.col})");
             Console.WriteLine($"Goal point: ({player.goal.endPoint.row}, {player.goal.endPoint.col})");*/
             IMazeSolver solver = new MazeSolver();
             solver = solver.Solve(maze, player);
-
-
-            //..and then render it
-            IMazeRenderer renderTarget = new RenderDictionaryToConsole();
-            //IMazeRenderer renderTarget = new RenderDictionaryToFile();
-            maze.Render(renderTarget);
         }
     }
 }
