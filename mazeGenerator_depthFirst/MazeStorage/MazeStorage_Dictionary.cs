@@ -91,9 +91,12 @@
             return (rows, cols);
         }
 
-        public void Render(IMazeRenderer renderer)
+        public void Render(IMazeRenderer renderer, IMazeSolver? solver = null)
         {
-            renderer.Render(this);
+            if (solver == null)
+                renderer.Render(this);
+            else
+                renderer.Render(this, solver);
         }
     }
 }

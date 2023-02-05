@@ -9,15 +9,22 @@ namespace mazeGenerator
 {
     internal class MazeSolver : IMazeSolver
     {
+        List<CellsAndWalls> shortestPath;
+
+        public MazeSolver()
+        {
+            shortestPath = new();
+        }
+
         public IMazeSolver Solve(IMazeStorage maze, Player player)
         {
             //We'll want to find the shortest path from wherever the player current is, to the end
-            //  We'll define "end" is lower-right corner.
+            //  We'll define "end" as lower-right corner.
 
             Dictionary<string, CellsAndWalls> dict = maze.GetDict();
             Dictionary<string, bool> visited = new();
             Dictionary<string, int> distances = new();
-            List<CellsAndWalls> thePath = new();            
+            Dictionary<string, string> whoQueuedMe = new();
             int theNodesDistance = 0;
 
             //Initialize the dictionaries we just declared
@@ -37,6 +44,8 @@ namespace mazeGenerator
             q.Enqueue(dict[str_Start]);
             visited[str_Start] = true;
 
+            whoQueuedMe[str_Start] = "";
+
             //
             // "Loop till queue is empty."
             //
@@ -47,15 +56,9 @@ namespace mazeGenerator
                 //
                 CellsAndWalls theNode = q.Dequeue();
                 string str_theNode = $"r{theNode.cell.row}c{theNode.cell.col}";
-                player.position.row = theNode.cell.row; //Assuming we should update's player's position
+                player.position.row = theNode.cell.row; //Necessary?  TBD
                 player.position.col = theNode.cell.col;
 
-                //IN PROGRESS: Adding this to try to reconstruct the shortest path
-                /*string str = $"r{theNode.cell.row}c{theNode.cell.col}";
-                thePath.Add(dict[str]);*/     //Pretty sure this will add every node we visit, every time.
-                                            // We need to be a bit more selective.
-                //END
-                
                 //
                 // "If the popped node is the destination node, then return its distance."
                 //
@@ -77,28 +80,28 @@ namespace mazeGenerator
                     if (dict.ContainsKey(str_above) && visited[str_above] == false && dict[str_above].wallBelow == null)   
                     {
                         distances[str_above] = distances[str_theNode] + 1;
-                        //dict[str_above].whoQueuedMe = dict[str].cell;  //RECENTLY ADDED
+                        whoQueuedMe[str_above] = str_theNode;
                         q.Enqueue(dict[str_above]);
                         visited[str_above] = true;
                     }
                     if (dict.ContainsKey(str_below) && visited[str_below] == false && dict[str_theNode].wallBelow == null)
                     {
                         distances[str_below] = distances[str_theNode] + 1;
-                        //dict[str_below].whoQueuedMe = dict[str].cell;  //RECENTLY ADDED
+                        whoQueuedMe[str_below] = str_theNode;
                         q.Enqueue(dict[str_below]);
                         visited[str_below] = true;
                      }
                     if (dict.ContainsKey(str_toTheLeft) && visited[str_toTheLeft] == false && dict[str_toTheLeft].wallToTheRight == null)
                     {
                         distances[str_toTheLeft] = distances[str_theNode] + 1;
-                        //dict[str_toTheLeft].whoQueuedMe = dict[str].cell;  //RECENTLY ADDED
+                        whoQueuedMe[str_toTheLeft] = str_theNode;
                         q.Enqueue(dict[str_toTheLeft]);
                         visited[str_toTheLeft] = true;
                     }
                     if (dict.ContainsKey(str_toTheRight) && visited[str_toTheRight] == false && dict[str_theNode].wallToTheRight == null)
                     {
                         distances[str_toTheRight] = distances[str_theNode] + 1;
-                        //dict[str_toTheRight].whoQueuedMe = dict[str].cell; //RECENTLY ADDED
+                        whoQueuedMe[str_toTheRight] = str_theNode;
                         q.Enqueue(dict[str_toTheRight]);
                         visited[str_toTheRight] = true;
                     }
@@ -114,50 +117,62 @@ namespace mazeGenerator
                 theNodesDistance = -1;
             }
 
-
-            //Wrap-up
-            if (theNodesDistance == -1)
+            //
+            // With the algorithm done, we can wrap stuff up.
+            //
+ /*           if (theNodesDistance == -1)
             {
-                Console.WriteLine("MazeSolver.Solve says: theNodesDistance was -1. :("); //\n");
+                Console.WriteLine("MazeSolver.Solve says: theNodesDistance was -1. Maze is unsolvable, apparently!");
             }
             else
             {
-                //Everything's fine....right?  TBD
-                Console.WriteLine($"MazeSolver.Solve says: theNodesDistance was equal to {theNodesDistance}."); //\n");
-            }
+                Console.WriteLine($"MazeSolver.Solve says: theNodesDistance was equal to {theNodesDistance}.");
+            }*/
 
-            int visitedTrueCounter = 0;
+            /*int visitedTrueCounter = 0;
             foreach (var k in visited.Keys)
             {
                 if (visited[k] == true)
                     visitedTrueCounter++;
             }
-            Console.WriteLine($"Visited.Count == true: {visitedTrueCounter}\n");
+            Console.WriteLine($"Visited.Count == true: {visitedTrueCounter}\n");*/
 
-            //Shortest path (in progress)
-            //Console.WriteLine("Shortest path (in progress):");
-            /*for (int i = 0; i < thePath.Count; i++)
-            {
-                Console.Write($"({thePath[i].cell.row}, {thePath[i].cell.col}) ");
-            }
-            Console.WriteLine("");*/
-            /*string str2 = $"r{player.goal.row}c{player.goal.col}";
+            //Generate the shortest path
+            string str2 = $"r{player.goal.row}c{player.goal.col}";
             try
             {
-                while (dict[str2].whoQueuedMe != null)
+                while (whoQueuedMe[str2] != "")
                 {
-                    thePath.Add(dict[str2]);
-                    str2 = $"r{dict[str2].whoQueuedMe.row}c{dict[str2].whoQueuedMe.col}";
+                    shortestPath.Add(dict[str2]);
+                    str2 = whoQueuedMe[str2];
                 }
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine($"Error in MazeSolver.Solve: {e.Message}");
-            }*/
-            
+            }
 
-            //So...what exactly do we do with theNodesDistance?  TBD
+            //Console.WriteLine("Shortest path:");
+            //Add the player's starting point to the list, then reverse the list
+            string str_playerStartingPoint = $"r{player.startingPoint.row}c{player.startingPoint.col}";
+            shortestPath.Add(dict[str_playerStartingPoint]);
+            shortestPath.Reverse();
+
+            /*for (int i = 0; i < shortestPath.Count; i++)
+            {
+                Console.Write($"({shortestPath[i].cell.row}, {shortestPath[i].cell.col}) ");
+            }
+            Console.WriteLine("");*/
 
             return this;
+
+        }//end Solve()
+
+
+        public List<CellsAndWalls> GetShortestPath()
+        {
+            return shortestPath;
         }
-    }
+
+    }//END class MazeSolver
 }

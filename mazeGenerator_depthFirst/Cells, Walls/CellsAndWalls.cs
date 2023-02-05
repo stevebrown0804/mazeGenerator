@@ -8,9 +8,6 @@
         public Wall? wallBelow;
         public Wall? wallToTheRight;
 
-        //public Cell? whoQueuedMe;    //Adding this for the shortest-path algorithm
-                                    //FOLLOW-UP: But moving it to a dictinoary within the MazeSolver class
-
         public CellsAndWalls(Cell cell, Wall? wallBelow, Wall? wallToTheRight)
         {
             this.cell = cell;

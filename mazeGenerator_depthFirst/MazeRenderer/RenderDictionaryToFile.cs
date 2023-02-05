@@ -2,7 +2,7 @@
 {
     internal class RenderDictionaryToFile : IMazeRenderer
     {
-        public void Render(IMazeStorage maze)
+        public void Render(IMazeStorage maze, IMazeSolver? solver = null)
         {
             throw new NotImplementedException();
         }

@@ -124,7 +124,7 @@
             throw new NotImplementedException();
         }
 
-        public void Render(IMazeRenderer renderer)
+        public void Render(IMazeRenderer renderer, IMazeSolver solver)
         {
             throw new NotImplementedException();
         }

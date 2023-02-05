@@ -1,4 +1,6 @@
-﻿namespace mazeGenerator
+﻿using System.Collections.Generic;
+
+namespace mazeGenerator
 {
     internal class MainClass
     {
@@ -15,19 +17,29 @@
             IMazeCreation mazeCreator = new Prims();
             maze = maze.CreateMaze(mazeCreator);
 
+            //We'll create a player object
+            Player player = new(maze);
+            
+            //And a maze-solver object
+            IMazeSolver solver = new MazeSolver();
+            solver = solver.Solve(maze, player);
+
             //..and then render it
             IMazeRenderer renderTarget = new RenderDictionaryToConsole();
             //IMazeRenderer renderTarget = new RenderDictionaryToFile();
-            maze.Render(renderTarget);
+            maze.Render(renderTarget, solver);
+            //maze.Render(renderTarget);
 
+            //TODO: Have RenderDictionaryToConsole (and to file, eventually) incorporate the shortest path
 
-            //We'll create a player object
-            Player player = new(maze);
-            /*Console.WriteLine($"Starting point: ({player.goal.startingPoint.row}, {player.goal.startingPoint.col})");
-            Console.WriteLine($"Current player position: ({player.position.row}, {player.position.col})");
-            Console.WriteLine($"Goal point: ({player.goal.endPoint.row}, {player.goal.endPoint.col})");*/
-            IMazeSolver solver = new MazeSolver();
-            solver = solver.Solve(maze, player);
+            //TMP
+            /*List<CellsAndWalls> shortestPath = solver.GetShortestPath();
+            for (int i = 0; i < shortestPath.Count; i++)
+            {
+                Console.Write($"({shortestPath[i].cell.row}, {shortestPath[i].cell.col}) ");
+            }
+            Console.WriteLine("");*/
+            //END TMP
         }
     }
 }

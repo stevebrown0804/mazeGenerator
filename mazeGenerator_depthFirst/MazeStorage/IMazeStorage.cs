@@ -4,7 +4,7 @@
     {
         IMazeStorage CreateMaze(IMazeCreation mazeCreator);
 
-        void Render(IMazeRenderer renderer);
+        void Render(IMazeRenderer renderer, IMazeSolver? solver = null);
 
         Dictionary<string, CellsAndWalls> GetDict();
 
